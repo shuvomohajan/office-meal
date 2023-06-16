@@ -12,9 +12,10 @@ return new class () extends Migration {
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('catering_id')->constrained();
-            $table->foreignId('meal_type_id')->constrained();
+            $table->foreignId('catering_id')->constrained()->cascadeOnDelete();
+            $table->string('name')->unique();
+            $table->integer('price');
+            $table->string('description')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
