@@ -1,34 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect, FormEventHandler } from 'react';
+import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function ResetPassword({ token, email }) {
+export default function Login({ status, canResetPassword }: { status?: string, canResetPassword: boolean }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        token: token,
-        email: email,
+        email: '',
         password: '',
-        password_confirmation: '',
+        remember: false,
     });
 
     useEffect(() => {
         return () => {
-            reset('password', 'password_confirmation');
+            reset('password');
         };
     }, []);
 
-    const submit = (e) => {
+    const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('password.store'));
+        post(route('login'));
     };
 
     return (
         <GuestLayout>
-            <Head title="Reset Password" />
+            <Head title="Log in" />
+
+            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
             <form onSubmit={submit}>
                 <div>
@@ -41,6 +43,7 @@ export default function ResetPassword({ token, email }) {
                         value={data.email}
                         className="mt-1 block w-full"
                         autoComplete="username"
+                        isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
                     />
 
@@ -56,32 +59,36 @@ export default function ResetPassword({ token, email }) {
                         name="password"
                         value={data.password}
                         className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        isFocused={true}
+                        autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
                     />
 
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
+                <div className="block mt-4">
+                    <label className="flex items-center">
+                        <Checkbox
+                            name="remember"
+                            checked={data.remember}
+                            onChange={(e) => setData('remember', e.target.checked)}
+                        />
+                        <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+                    </label>
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
+                    {canResetPassword && (
+                        <Link
+                            href={route('password.request')}
+                            className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        >
+                            Forgot your password?
+                        </Link>
+                    )}
+
                     <PrimaryButton className="ml-4" disabled={processing}>
-                        Reset Password
+                        Log in
                     </PrimaryButton>
                 </div>
             </form>

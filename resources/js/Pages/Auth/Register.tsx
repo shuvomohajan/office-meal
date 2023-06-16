@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, FormEventHandler } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
@@ -20,7 +20,7 @@ export default function Register() {
         };
     }, []);
 
-    const submit = (e) => {
+    const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
         post(route('register'));
