@@ -14,10 +14,6 @@ class MealSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Meal::factory()->create([
-            'catering_id' => 1,
-            'name' => 'Test Meal',
-            'price' => 100,
-        ]);
+        \App\Models\Meal::factory(10)->create();
     }
 }

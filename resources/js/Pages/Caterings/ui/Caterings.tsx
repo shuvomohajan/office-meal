@@ -1,9 +1,33 @@
+import DeleteItem from '@/Components/DeleteItem'
+import Pagination from '@/Components/Pagination'
+import SecondaryButton from '@/Components/SecondaryButton'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { PageProps } from '@/types'
 import { Head } from '@inertiajs/react'
-import { Fragment } from 'react'
+import { useRef, useState } from 'react'
+import EditModal from '../partials/EditModal'
 
 export default function Caterings({ auth, caterings }: PageProps<CateringProp>) {
+  const [isOpen, setIsOpen] = useState(false)
+  const editRef = useRef<Catering['id'] | null>(null)
+
+  const closeModal = () => {
+    setIsOpen(false)
+  }
+
+  const openModal = () => {
+    setIsOpen(true)
+  }
+
+  const editCatering = (cateringId: Catering['id']) => {
+    editRef.current = cateringId
+    openModal()
+  }
+
+  const getCatering = () => {
+    return caterings.data.find(catering => catering.id === editRef.current)
+  }
+
   return (
     <AuthenticatedLayout
       user={auth.user}
@@ -37,35 +61,37 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    {caterings.map(catering => (
-                      <Fragment key={catering.id}>
-                        <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                          {catering.name}
-                        </td>
-                        <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                          {catering.phone}
-                        </td>
-                        <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                          {catering.address}
-                        </td>
-                      </Fragment>
-                    ))}
-                    <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                      <div className="flex gap-2">
-                        <button className="bd-gray-200 dark:bg-gray-900 px-2 rounded">Edit</button>
-                        <button className="bd-gray-200 dark:bg-gray-900 px-2 rounded text-red-500">
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                  {caterings.data.map(catering => (
+                    <tr key={catering.id}>
+                      <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
+                        {catering.name}
+                      </td>
+                      <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
+                        {catering.phone}
+                      </td>
+                      <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
+                        {catering.address}
+                      </td>
+                      <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
+                        <div className="flex gap-1">
+                          <SecondaryButton onClick={() => editCatering(catering.id)}>
+                            Edit
+                          </SecondaryButton>
+                          <DeleteItem route={route('caterings.destroy', catering.id)} />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
+
+              <Pagination links={caterings.links} />
             </div>
           </div>
         </div>
       </div>
+
+      <EditModal isOpen={isOpen} closeModal={closeModal} catering={getCatering()} />
     </AuthenticatedLayout>
   )
 }

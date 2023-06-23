@@ -7,6 +7,15 @@ type Catering = {
   updated_at: string
 }
 
+type Link = {
+  url: string
+  label: string
+  active: boolean
+}
+
 type CateringProp = {
-  caterings: Catering[]
+  caterings: {
+    data: Catering[]
+    links: Link[]
+  }
 }

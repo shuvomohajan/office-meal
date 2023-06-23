@@ -15,7 +15,7 @@ class CateringController extends Controller
     public function index()
     {
         return Inertia::render('Caterings/index', [
-            'caterings' => Catering::all(),
+            'caterings' => Catering::paginate(10),
         ]);
     }
 

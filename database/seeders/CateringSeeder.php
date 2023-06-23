@@ -14,9 +14,6 @@ class CateringSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Catering::factory()->create([
-            'name' => 'Test Catering',
-            'phone' => '1234567890',
-        ]);
+        \App\Models\Catering::factory(10)->create();
     }
 }
