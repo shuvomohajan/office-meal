@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMealRequest;
 use App\Http\Requests\UpdateMealRequest;
 use App\Models\Meal;
+use Inertia\Inertia;
 
 class MealController extends Controller
 {
@@ -13,15 +14,9 @@ class MealController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Inertia::render('Meals', [
+            'meals' => Meal::all(),
+        ]);
     }
 
     /**
@@ -29,23 +24,13 @@ class MealController extends Controller
      */
     public function store(StoreMealRequest $request)
     {
-        //
-    }
+        $meal = Meal::create($request->validated());
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Meal $meal)
-    {
-        //
-    }
+        if ($request->hasFile('image')) {
+            $meal->addMediaFromRequest('image')->toMediaCollection();
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Meal $meal)
-    {
-        //
+        return back()->with('success', 'Meal created.');
     }
 
     /**
@@ -53,7 +38,13 @@ class MealController extends Controller
      */
     public function update(UpdateMealRequest $request, Meal $meal)
     {
-        //
+        $meal->update($request->validated());
+
+        if ($request->hasFile('image')) {
+            $meal->addMediaFromRequest('image')->toMediaCollection();
+        }
+
+        return back()->with('success', 'Meal updated.');
     }
 
     /**
@@ -61,6 +52,8 @@ class MealController extends Controller
      */
     public function destroy(Meal $meal)
     {
-        //
+        $meal->delete();
+
+        return back()->with('success', 'Meal deleted.');
     }
 }

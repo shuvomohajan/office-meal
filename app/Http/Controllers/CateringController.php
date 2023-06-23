@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCateringRequest;
 use App\Http\Requests\UpdateCateringRequest;
 use App\Models\Catering;
+use Inertia\Inertia;
 
 class CateringController extends Controller
 {
@@ -13,15 +14,9 @@ class CateringController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Inertia::render('Caterings/index', [
+            'caterings' => Catering::all(),
+        ]);
     }
 
     /**
@@ -29,23 +24,13 @@ class CateringController extends Controller
      */
     public function store(StoreCateringRequest $request)
     {
-        //
-    }
+        $catering = Catering::create($request->validated());
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Catering $catering)
-    {
-        //
-    }
+        if ($request->hasFile('logo')) {
+            $catering->addMediaFromRequest('logo')->toMediaCollection();
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Catering $catering)
-    {
-        //
+        return back()->with('success', 'Catering created.');
     }
 
     /**
@@ -53,7 +38,13 @@ class CateringController extends Controller
      */
     public function update(UpdateCateringRequest $request, Catering $catering)
     {
-        //
+        $catering->update($request->validated());
+
+        if ($request->hasFile('logo')) {
+            $catering->addMediaFromRequest('logo')->toMediaCollection();
+        }
+
+        return back()->with('success', 'Catering updated.');
     }
 
     /**
@@ -61,6 +52,8 @@ class CateringController extends Controller
      */
     public function destroy(Catering $catering)
     {
-        //
+        $catering->delete();
+
+        return back()->with('success', 'Catering deleted.');
     }
 }

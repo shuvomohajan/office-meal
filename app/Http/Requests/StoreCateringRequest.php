@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreCateringRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreCateringRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,12 @@ class StoreCateringRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name'    => ['required', 'string', 'max:255', Rule::unique('caterings', 'name')],
+            'phone'   => ['required', 'numeric', 'digits:11'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'email'   => ['nullable', 'email', 'max:255'],
+            'website' => ['nullable', 'url', 'max:255'],
+            'status'  => ['boolean'],
         ];
     }
 }
