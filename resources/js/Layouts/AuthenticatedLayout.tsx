@@ -1,10 +1,12 @@
-import { useState, PropsWithChildren, ReactNode } from 'react'
+import { useState, PropsWithChildren, ReactNode, useEffect } from 'react'
 import ApplicationLogo from '@/Components/ApplicationLogo'
 import Dropdown from '@/Components/Dropdown'
 import NavLink from '@/Components/NavLink'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink'
 import { Link } from '@inertiajs/react'
 import { User } from '@/types'
+import { Switch } from '@headlessui/react'
+import Icon from '@/Components/Icon'
 
 export default function Authenticated({
   user,
@@ -12,6 +14,33 @@ export default function Authenticated({
   children
 }: PropsWithChildren<{ user: User; header?: ReactNode }>) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false)
+
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  const setDarkMode = (enabled: boolean) => {
+    setIsDarkMode(enabled)
+
+    if (enabled) {
+      document.documentElement.classList.add('dark')
+      localStorage.theme = 'dark'
+    } else {
+      document.documentElement.classList.remove('dark')
+      localStorage.theme = 'light'
+    }
+  }
+
+  useEffect(() => {
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      setIsDarkMode(true)
+      document.documentElement.classList.add('dark')
+    } else {
+      setIsDarkMode(false)
+      document.documentElement.classList.remove('dark')
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -36,6 +65,19 @@ export default function Authenticated({
             </div>
 
             <div className="hidden sm:flex sm:items-center sm:ml-6">
+              <Switch
+                checked={isDarkMode}
+                onChange={setDarkMode}
+                className="bg-gray-200 dark:bg-gray-500 relative inline-flex h-7 w-12 items-center rounded-full"
+              >
+                <span className="sr-only">Enable notifications</span>
+                <span className="translate-x-1 dark:translate-x-6 flex justify-center items-center h-5 w-5 transform rounded-full bg-white dark:bg-gray-800 transition">
+                  <Icon
+                    name={isDarkMode ? 'MoonStar' : 'Sun'}
+                    className="text-gray-700 dark:text-gray-200"
+                  />
+                </span>
+              </Switch>
               <div className="ml-3 relative">
                 <Dropdown>
                   <Dropdown.Trigger>

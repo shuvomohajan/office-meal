@@ -7,13 +7,22 @@ type IconProps = {
   color?: string
   size?: number | string
   strokeWidth?: number
+  className?: string
   style?: CSSProperties
 }
 
-const Icon = ({ name, color, size = '1rem', strokeWidth, style }: IconProps) => {
+const Icon = ({ name, color, size = '1rem', strokeWidth, className, style }: IconProps) => {
   const LucideIcon = icons[name] as LucideIconType
 
-  return <LucideIcon color={color} size={size} strokeWidth={strokeWidth} style={style} />
+  return (
+    <LucideIcon
+      color={color}
+      size={size}
+      strokeWidth={strokeWidth}
+      className={className}
+      style={style}
+    />
+  )
 }
 
 export default Icon
