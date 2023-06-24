@@ -12,7 +12,7 @@ export default function Pagination({ links }: PaginationProps) {
           href={page.url}
           className={[
             'inline-block py-1 px-2 rounded',
-            page.active ? 'bg-gray-700' : 'bg-gray-900'
+            page.active ? 'bg-gray-300 dark:bg-gray-600' : 'bg-gray-100 dark:bg-gray-900'
           ].join(' ')}
         >
           <span dangerouslySetInnerHTML={{ __html: page.label }} />
