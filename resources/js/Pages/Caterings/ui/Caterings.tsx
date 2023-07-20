@@ -5,7 +5,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { PageProps } from '@/types'
 import { Head } from '@inertiajs/react'
 import { useRef, useState } from 'react'
-import EditModal from '../partials/EditModal'
+import AddCateringModal from '../partials/AddCateringModal'
+import EditCateringModal from '../partials/EditCateringModal'
 
 export default function Caterings({ auth, caterings }: PageProps<CateringProp>) {
   const [isOpen, setIsOpen] = useState(false)
@@ -35,9 +36,14 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          Caterings
-        </h2>
+        <div className="flex justify-between">
+          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            Caterings
+          </h2>
+          <div>
+            <AddCateringModal title="Add Catering" />
+          </div>
+        </div>
       }
     >
       <Head title="Caterings" />
@@ -98,7 +104,7 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
       </div>
 
       {editableCatering && (
-        <EditModal isOpen={isOpen} closeModal={closeModal} catering={editableCatering} />
+        <EditCateringModal isOpen={isOpen} closeModal={closeModal} catering={editableCatering} />
       )}
     </AuthenticatedLayout>
   )

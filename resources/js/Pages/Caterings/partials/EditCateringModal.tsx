@@ -7,13 +7,13 @@ import { Switch } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect } from 'react'
 
-type EditModalProps = {
+type EditCateringProps = {
   isOpen: boolean
   closeModal: () => void
   catering: Catering
 }
 
-export default function EditModal({ isOpen, closeModal, catering }: EditModalProps) {
+export default function EditCateringModal({ isOpen, closeModal, catering }: EditCateringProps) {
   const { data, setData, put, processing, errors, reset } = useForm({
     name: catering.name || '',
     phone: catering.phone || '',
