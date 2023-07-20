@@ -23,7 +23,7 @@ class UpdateCateringRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'    => ['required', 'string', 'max:255', Rule::unique('caterings', 'name')->ignore($this->catering->id)],
+            'name'    => ['required', 'string', 'max:255', Rule::unique('caterings', 'name')->ignore($this->route()->catering->id)],
             'phone'   => ['required', 'numeric', 'digits:11'],
             'address' => ['nullable', 'string', 'max:255'],
             'email'   => ['nullable', 'email', 'max:255'],

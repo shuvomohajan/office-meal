@@ -1,8 +1,11 @@
 type Catering = {
   id: number
   name: string
-  phone: number
+  phone: string
   address: string
+  email: string
+  website: string
+  status: boolean
   created_at: string
   updated_at: string
 }

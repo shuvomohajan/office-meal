@@ -25,8 +25,11 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
   }
 
   const getCatering = () => {
+    if (editRef.current === null) return null
     return caterings.data.find(catering => catering.id === editRef.current)
   }
+
+  const editableCatering = getCatering()
 
   return (
     <AuthenticatedLayout
@@ -74,7 +77,10 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
                       </td>
                       <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
                         <div className="flex gap-1">
-                          <SecondaryButton onClick={() => editCatering(catering.id)}>
+                          <SecondaryButton
+                            onClick={() => editCatering(catering.id)}
+                            className="px-2 py-1"
+                          >
                             Edit
                           </SecondaryButton>
                           <DeleteItem route={route('caterings.destroy', catering.id)} />
@@ -91,7 +97,9 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
         </div>
       </div>
 
-      <EditModal isOpen={isOpen} closeModal={closeModal} catering={getCatering()} />
+      {editableCatering && (
+        <EditModal isOpen={isOpen} closeModal={closeModal} catering={editableCatering} />
+      )}
     </AuthenticatedLayout>
   )
 }
