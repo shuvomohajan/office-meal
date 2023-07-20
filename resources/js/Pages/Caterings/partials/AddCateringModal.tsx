@@ -8,7 +8,7 @@ import { Switch } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect, useState } from 'react'
 
-export default function AddCateringModal({ title = 'Add New' }) {
+export default function AddCateringModal() {
   const [isOpen, setIsOpen] = useState(false)
   const { data, setData, post, processing, errors, reset } = useForm({
     name: '',
@@ -18,12 +18,6 @@ export default function AddCateringModal({ title = 'Add New' }) {
     website: '',
     status: true
   })
-
-  useEffect(() => {
-    return () => {
-      reset()
-    }
-  }, [])
 
   const closeModal = () => {
     setIsOpen(false)
@@ -44,10 +38,16 @@ export default function AddCateringModal({ title = 'Add New' }) {
     })
   }
 
+  useEffect(() => {
+    return () => {
+      reset()
+    }
+  }, [])
+
   return (
     <>
       <PrimaryButton onClick={openModal} className="flex gap-1">
-        <Icon name="Plus" /> {title}
+        <Icon name="Plus" /> Add Catering
       </PrimaryButton>
 
       <Modal show={isOpen} onClose={closeModal}>
