@@ -12,8 +12,8 @@ export default function Pagination({ links }: PaginationProps) {
           key={'pagination-item-' + index * 2}
           href={page.url}
           className={[
-            'inline-block py-1 px-2 rounded',
-            page.active ? 'bg-gray-300 dark:bg-gray-600' : 'bg-gray-100 dark:bg-gray-900'
+            'inline-block py-1 px-3 rounded',
+            page.active ? 'bg-gray-800 text-white dark:bg-gray-600' : 'bg-gray-100 dark:bg-gray-900'
           ].join(' ')}
         >
           <span dangerouslySetInnerHTML={{ __html: page.label }} />

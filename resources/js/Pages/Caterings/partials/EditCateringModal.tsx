@@ -1,8 +1,9 @@
+import Icon from '@/Components/Icon'
+import IconButton from '@/Components/IconButton'
 import InputError from '@/Components/InputError'
 import InputLabel from '@/Components/InputLabel'
 import Modal from '@/Components/Modal'
 import PrimaryButton from '@/Components/PrimaryButton'
-import SecondaryButton from '@/Components/SecondaryButton'
 import TextInput from '@/Components/TextInput'
 import { Switch } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
@@ -49,7 +50,9 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
 
   return (
     <>
-      <SecondaryButton onClick={openModal}>Edit</SecondaryButton>
+      <IconButton onClick={openModal}>
+        <Icon name="Edit3" />
+      </IconButton>
 
       <Modal show={isOpen} onClose={closeModal}>
         <form className="p-6" onSubmit={submit}>

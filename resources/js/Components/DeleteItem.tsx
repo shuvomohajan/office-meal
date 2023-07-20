@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/react'
 import { useState } from 'react'
 import DangerButton from './DangerButton'
 import SecondaryButton from './SecondaryButton'
+import IconButton from './IconButton'
 
 type DeleteItemProps = {
   route: string
@@ -29,16 +30,24 @@ export default function DeleteItem({ route }: DeleteItemProps) {
   if (isDeleting) {
     return (
       <>
-        <DangerButton onClick={deleteCatering} disabled={processing} className="px-1.5">
+        <IconButton
+          onClick={deleteCatering}
+          disabled={processing}
+          className="text-red-600 dark:text-red-600"
+        >
           <Icon name="Check" />
-        </DangerButton>
+        </IconButton>
 
-        <SecondaryButton onClick={handleCancel} disabled={processing} className="px-1.5">
+        <IconButton onClick={handleCancel} disabled={processing}>
           <Icon name="X" />
-        </SecondaryButton>
+        </IconButton>
       </>
     )
   }
 
-  return <DangerButton onClick={handleDelete}>Delete</DangerButton>
+  return (
+    <IconButton onClick={handleDelete} className="text-red-600 dark:text-red-600">
+      <Icon name="Trash2" />
+    </IconButton>
+  )
 }
