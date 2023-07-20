@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -45,7 +47,7 @@ class User extends Authenticatable implements HasMedia
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'password'          => 'hashed',
     ];
 
     public function registerMediaCollections(): void
@@ -53,8 +55,18 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaCollection('image')->singleFile();
     }
 
-    public function meals()
+    public function meals(): BelongsToMany
     {
         return $this->belongsToMany(Meal::class);
+    }
+
+    public function userPayments(): HasMany
+    {
+        return $this->hasMany(UserPayment::class);
+    }
+
+    public function cateringPayments(): HasMany
+    {
+        return $this->hasMany(CateringPayment::class);
     }
 }
