@@ -1,6 +1,7 @@
 import DeleteItem from '@/Components/DeleteItem'
 import Pagination from '@/Components/Pagination'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
+import { getFirstMediaUrl } from '@/helpers/laravelMediaQuery'
 import { PageProps } from '@/types'
 import { Head } from '@inertiajs/react'
 import AddCateringModal from '../partials/AddCateringModal'
@@ -38,33 +39,57 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
                         Phone
                       </th>
                       <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 dark:text-gray-100 text-sm bg-gray-100 dark:bg-gray-900">
-                        Address
+                        Menu
                       </th>
                       <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 dark:text-gray-100 text-sm bg-gray-100 dark:bg-gray-900">
+                        Address
+                      </th>
+                      <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 dark:text-gray-100 text-sm bg-gray-100 dark:bg-gray-900 text-right w-36">
                         Actions
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {caterings.data.map(catering => (
-                      <tr key={catering.id}>
-                        <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                          {catering.name}
-                        </td>
-                        <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                          {catering.phone}
-                        </td>
-                        <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                          {catering.address}
-                        </td>
-                        <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                          <div className="flex gap-1">
-                            <EditCateringModal catering={catering} />
-                            <DeleteItem route={route('caterings.destroy', catering.id)} />
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                    {caterings.data.map(catering => {
+                      const logo = getFirstMediaUrl(catering.media, 'logo')
+                      const menuImg = getFirstMediaUrl(catering.media, 'meal_menu')
+
+                      return (
+                        <tr key={catering.id}>
+                          <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3 flex items-center gap-3">
+                            {logo ? (
+                              <img
+                                src={logo}
+                                alt="logo"
+                                className="h-10 w-10 object-cover rounded-full"
+                              />
+                            ) : (
+                              <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                            )}
+                            {catering.name}
+                          </td>
+                          <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
+                            {catering.phone}
+                          </td>
+                          <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
+                            {menuImg && (
+                              <a href={menuImg} target="_blank">
+                                <img src={menuImg} alt="menu" className="h-10 w-10 object-fit" />
+                              </a>
+                            )}
+                          </td>
+                          <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
+                            {catering.address}
+                          </td>
+                          <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
+                            <div className="flex gap-1 justify-end">
+                              <EditCateringModal catering={catering} />
+                              <DeleteItem route={route('caterings.destroy', catering.id)} />
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>

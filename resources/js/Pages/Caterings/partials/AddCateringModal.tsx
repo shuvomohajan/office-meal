@@ -16,7 +16,9 @@ export default function AddCateringModal() {
     address: '',
     email: '',
     website: '',
-    status: true
+    status: true,
+    logo: null as File | null,
+    meal_menu: null as File | null
   })
 
   const closeModal = () => {
@@ -154,6 +156,38 @@ export default function AddCateringModal() {
             </Switch>
 
             <InputError message={errors.status} className="mt-2" />
+          </div>
+
+          <div className="mt-4">
+            <InputLabel htmlFor="logo" value="Logo" />
+
+            <TextInput
+              id="logo"
+              type="file"
+              name="logo"
+              className="mt-1 block w-full border px-2 py-1"
+              autoComplete="logo"
+              onChange={e => setData('logo', e.target.files?.[0] || null)}
+              accept="image/*"
+            />
+
+            <InputError message={errors.logo} className="mt-2" />
+          </div>
+
+          <div className="mt-4">
+            <InputLabel htmlFor="meal_menu" value="Meal Menu Image" />
+
+            <TextInput
+              id="meal_menu"
+              type="file"
+              name="meal_menu"
+              className="mt-1 block w-full border px-2 py-1"
+              autoComplete="meal_menu"
+              onChange={e => setData('meal_menu', e.target.files?.[0] || null)}
+              accept="image/*"
+            />
+
+            <InputError message={errors.meal_menu} className="mt-2" />
           </div>
 
           <div className="flex items-center justify-end mt-4">

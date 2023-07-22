@@ -26,6 +26,7 @@ class Catering extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('logo')->singleFile();
+        $this->addMediaCollection('meal_menu')->singleFile();
     }
 
     public function meals(): HasMany

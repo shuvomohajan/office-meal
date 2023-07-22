@@ -15,7 +15,7 @@ class CateringController extends Controller
     public function index()
     {
         return Inertia::render('Caterings/index', [
-            'caterings' => Catering::latest()->paginate(10),
+            'caterings' => Catering::with('media')->latest()->paginate(10),
         ]);
     }
 
@@ -27,7 +27,11 @@ class CateringController extends Controller
         $catering = Catering::create($request->validated());
 
         if ($request->hasFile('logo')) {
-            $catering->addMediaFromRequest('logo')->toMediaCollection();
+            $catering->addMediaFromRequest('logo')->toMediaCollection('logo');
+        }
+
+        if ($request->hasFile('meal_menu')) {
+            $catering->addMediaFromRequest('meal_menu')->toMediaCollection('meal_menu');
         }
 
         return back()->with('success', 'Catering created.');
