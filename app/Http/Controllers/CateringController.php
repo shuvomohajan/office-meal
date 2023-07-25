@@ -44,8 +44,20 @@ class CateringController extends Controller
     {
         $catering->update($request->validated());
 
+        if ($request->remove_logo) {
+            $catering->clearMediaCollection('logo');
+        }
+
+        if ($request->remove_meal_menu) {
+            $catering->clearMediaCollection('meal_menu');
+        }
+
         if ($request->hasFile('logo')) {
-            $catering->addMediaFromRequest('logo')->toMediaCollection();
+            $catering->addMediaFromRequest('logo')->toMediaCollection('logo');
+        }
+
+        if ($request->hasFile('meal_menu')) {
+            $catering->addMediaFromRequest('meal_menu')->toMediaCollection('meal_menu');
         }
 
         return back()->with('success', 'Catering updated.');

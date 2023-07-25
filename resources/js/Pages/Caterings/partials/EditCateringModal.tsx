@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel'
 import Modal from '@/Components/Modal'
 import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
+import { getFirstMediaUrl } from '@/helpers/laravelMediaQuery'
 import { Switch } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect, useState } from 'react'
@@ -15,13 +16,18 @@ type EditCateringProps = {
 
 export default function EditCateringModal({ catering }: EditCateringProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const { data, setData, put, processing, errors, reset } = useForm({
+  const { data, setData, post, processing, errors, reset } = useForm({
+    _method: 'put',
     name: catering.name || '',
     phone: catering.phone || '',
     address: catering.address || '',
     email: catering.email || '',
     website: catering.website || '',
-    status: catering.status || false
+    status: catering.status || false,
+    logo: null as File | null,
+    meal_menu: null as File | null,
+    remove_logo: false,
+    remove_meal_menu: false
   })
 
   const openModal = () => {
@@ -35,12 +41,16 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
   const submit: FormEventHandler = e => {
     e.preventDefault()
 
-    put(route('caterings.update', catering.id), {
+    post(route('caterings.update', catering.id), {
       onSuccess: () => {
         closeModal()
+        reset()
       }
     })
   }
+
+  const logo = getFirstMediaUrl(catering.media, 'logo')
+  const menuImg = getFirstMediaUrl(catering.media, 'meal_menu')
 
   useEffect(() => {
     return () => {
@@ -71,6 +81,7 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
             />
             <InputError message={errors.name} className="mt-2" />
           </div>
+
           <div className="mt-4">
             <InputLabel htmlFor="phone" value="Phone" />
             <TextInput
@@ -84,6 +95,7 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
             />
             <InputError message={errors.phone} className="mt-2" />
           </div>
+
           <div className="mt-4">
             <InputLabel htmlFor="address" value="Address" />
             <TextInput
@@ -97,6 +109,7 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
             />
             <InputError message={errors.address} className="mt-2" />
           </div>
+
           <div className="mt-4">
             <InputLabel htmlFor="email" value="Email" />
             <TextInput
@@ -110,6 +123,7 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
             />
             <InputError message={errors.email} className="mt-2" />
           </div>
+
           <div className="mt-4">
             <InputLabel htmlFor="website" value="Website" />
             <TextInput
@@ -123,6 +137,7 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
             />
             <InputError message={errors.website} className="mt-2" />
           </div>
+
           <div className="mt-4">
             <InputLabel htmlFor="status" value="Status" />
             <Switch
@@ -141,6 +156,71 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
             </Switch>
             <InputError message={errors.status} className="mt-2" />
           </div>
+
+          <div className="mt-4">
+            <InputLabel htmlFor="logo" value="Logo" />
+
+            {!data.remove_logo && logo ? (
+              <div className="relative w-20 h-20 my-2">
+                <img src={logo} alt="logo" className="w-full h-full object-cover border rounded" />
+                <IconButton
+                  rounded
+                  type="button"
+                  className="text-red-600 absolute top-0 right-0 -mr-4 -mt-4"
+                  onClick={() => setData('remove_logo', true)}
+                >
+                  <Icon name="X" />
+                </IconButton>
+              </div>
+            ) : null}
+
+            <TextInput
+              id="logo"
+              type="file"
+              name="logo"
+              className="mt-1 block w-full border px-2 py-1"
+              autoComplete="logo"
+              onChange={e => setData('logo', e.target.files?.[0] || null)}
+              accept="image/*"
+            />
+
+            <InputError message={errors.logo} className="mt-2" />
+          </div>
+
+          <div className="mt-4">
+            <InputLabel htmlFor="meal_menu" value="Meal Menu Image" />
+
+            {!data.remove_meal_menu && menuImg ? (
+              <div className="relative w-20 h-20 my-2">
+                <img
+                  src={menuImg}
+                  alt="meal_menu"
+                  className="w-full h-full object-cover border rounded"
+                />
+                <IconButton
+                  rounded
+                  type="button"
+                  className="text-red-600 absolute top-0 right-0 -mr-4 -mt-4"
+                  onClick={() => setData('remove_meal_menu', true)}
+                >
+                  <Icon name="X" />
+                </IconButton>
+              </div>
+            ) : null}
+
+            <TextInput
+              id="meal_menu"
+              type="file"
+              name="meal_menu"
+              className="mt-1 block w-full border px-2 py-1"
+              autoComplete="meal_menu"
+              onChange={e => setData('meal_menu', e.target.files?.[0] || null)}
+              accept="image/*"
+            />
+
+            <InputError message={errors.meal_menu} className="mt-2" />
+          </div>
+
           <div className="flex items-center justify-end mt-4">
             <PrimaryButton className="ml-4" disabled={processing}>
               Update
