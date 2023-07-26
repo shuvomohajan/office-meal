@@ -3,6 +3,7 @@
 use App\Http\Controllers\CateringController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,4 +43,5 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('caterings', CateringController::class)->except(['create', 'edit', 'show']);
     Route::resource('meals', MealController::class)->except(['create', 'edit', 'show']);
+    Route::resource('users', UserController::class)->except(['create', 'edit', 'show']);
 });

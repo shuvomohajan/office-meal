@@ -4,13 +4,12 @@ type MediaCollection = {
   size: number
 }
 
-type Catering = {
+type User = {
   id: number
+  role_id: number
   name: string
   phone: string
-  address: string
   email: string
-  website: string
   status: boolean
   media: MediaCollection[]
   created_at: string
@@ -23,9 +22,9 @@ type Link = {
   active: boolean
 }
 
-type CateringProp = {
-  caterings: {
-    data: Catering[]
+export type UserProp = {
+  users: {
+    data: User[]
     links: Link[]
   }
 }

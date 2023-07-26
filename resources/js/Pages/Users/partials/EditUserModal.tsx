@@ -9,26 +9,21 @@ import { getFirstMediaUrl } from '@/helpers/laravelMediaQuery'
 import { Switch } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect, useState } from 'react'
-import { type Catering } from '@/Pages/Caterings/ui/Caterings.d'
 
-type EditCateringProps = {
-  catering: Catering
+type EditUserProps = {
+  user: User
 }
 
-export default function EditCateringModal({ catering }: EditCateringProps) {
+export default function EditUserModal({ user }: EditUserProps) {
   const [isOpen, setIsOpen] = useState(false)
   const { data, setData, post, processing, errors, reset } = useForm({
     _method: 'put',
-    name: catering.name || '',
-    phone: catering.phone || '',
-    address: catering.address || '',
-    email: catering.email || '',
-    website: catering.website || '',
-    status: catering.status || false,
-    logo: null as File | null,
-    meal_menu: null as File | null,
-    remove_logo: false,
-    remove_meal_menu: false
+    name: user.name || '',
+    phone: user.phone || '',
+    email: user.email || '',
+    status: user.status || false,
+    image: null as File | null,
+    remove_image: false
   })
 
   const openModal = () => {
@@ -42,7 +37,7 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
   const submit: FormEventHandler = e => {
     e.preventDefault()
 
-    post(route('caterings.update', catering.id), {
+    post(route('users.update', user.id), {
       onSuccess: () => {
         closeModal()
         reset()
@@ -50,8 +45,7 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
     })
   }
 
-  const logo = getFirstMediaUrl(catering.media, 'logo')
-  const menuImg = getFirstMediaUrl(catering.media, 'meal_menu')
+  const image = getFirstMediaUrl(user.media, 'image')
 
   useEffect(() => {
     return () => {
@@ -67,7 +61,7 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
 
       <Modal show={isOpen} onClose={closeModal}>
         <form className="p-6" onSubmit={submit}>
-          <h2 className="text-md font-medium text-gray-900 dark:text-gray-100">Edit Catering</h2>
+          <h2 className="text-md font-medium text-gray-900 dark:text-gray-100">Edit User</h2>
           <div className="mt-4">
             <InputLabel htmlFor="name" value="Name" />
             <TextInput
@@ -98,20 +92,6 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
           </div>
 
           <div className="mt-4">
-            <InputLabel htmlFor="address" value="Address" />
-            <TextInput
-              id="address"
-              type="text"
-              name="address"
-              value={data.address}
-              className="mt-1 block w-full"
-              autoComplete="address"
-              onChange={e => setData('address', e.target.value)}
-            />
-            <InputError message={errors.address} className="mt-2" />
-          </div>
-
-          <div className="mt-4">
             <InputLabel htmlFor="email" value="Email" />
             <TextInput
               id="email"
@@ -123,20 +103,6 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
               onChange={e => setData('email', e.target.value)}
             />
             <InputError message={errors.email} className="mt-2" />
-          </div>
-
-          <div className="mt-4">
-            <InputLabel htmlFor="website" value="Website" />
-            <TextInput
-              id="website"
-              type="url"
-              name="website"
-              value={data.website}
-              className="mt-1 block w-full"
-              autoComplete="website"
-              onChange={e => setData('website', e.target.value)}
-            />
-            <InputError message={errors.website} className="mt-2" />
           </div>
 
           <div className="mt-4">
@@ -159,16 +125,16 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
           </div>
 
           <div className="mt-4">
-            <InputLabel htmlFor="logo" value="Logo" />
+            <InputLabel htmlFor="image" value="Logo" />
 
-            {!data.remove_logo && logo ? (
+            {!data.remove_image && image ? (
               <div className="relative w-20 h-20 my-2">
-                <img src={logo} alt="logo" className="w-full h-full object-cover border rounded" />
+                <img src={image} alt="image" className="w-full h-full object-cover border rounded" />
                 <IconButton
                   rounded
                   type="button"
                   className="text-red-600 absolute top-0 right-0 -mr-4 -mt-4"
-                  onClick={() => setData('remove_logo', true)}
+                  onClick={() => setData('remove_image', true)}
                 >
                   <Icon name="X" />
                 </IconButton>
@@ -176,50 +142,16 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
             ) : null}
 
             <TextInput
-              id="logo"
+              id="image"
               type="file"
-              name="logo"
+              name="image"
               className="mt-1 block w-full border px-2 py-1"
-              autoComplete="logo"
-              onChange={e => setData('logo', e.target.files?.[0] || null)}
+              autoComplete="image"
+              onChange={e => setData('image', e.target.files?.[0] || null)}
               accept="image/*"
             />
 
-            <InputError message={errors.logo} className="mt-2" />
-          </div>
-
-          <div className="mt-4">
-            <InputLabel htmlFor="meal_menu" value="Meal Menu Image" />
-
-            {!data.remove_meal_menu && menuImg ? (
-              <div className="relative w-20 h-20 my-2">
-                <img
-                  src={menuImg}
-                  alt="meal_menu"
-                  className="w-full h-full object-cover border rounded"
-                />
-                <IconButton
-                  rounded
-                  type="button"
-                  className="text-red-600 absolute top-0 right-0 -mr-4 -mt-4"
-                  onClick={() => setData('remove_meal_menu', true)}
-                >
-                  <Icon name="X" />
-                </IconButton>
-              </div>
-            ) : null}
-
-            <TextInput
-              id="meal_menu"
-              type="file"
-              name="meal_menu"
-              className="mt-1 block w-full border px-2 py-1"
-              autoComplete="meal_menu"
-              onChange={e => setData('meal_menu', e.target.files?.[0] || null)}
-              accept="image/*"
-            />
-
-            <InputError message={errors.meal_menu} className="mt-2" />
+            <InputError message={errors.image} className="mt-2" />
           </div>
 
           <div className="flex items-center justify-end mt-4">

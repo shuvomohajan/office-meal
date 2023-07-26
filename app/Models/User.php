@@ -19,15 +19,24 @@ class User extends Authenticatable implements HasMedia
     use Notifiable;
     use InteractsWithMedia;
 
+    const role = [
+        'SUPER_ADMIN' => 1,
+        'MANAGER'     => 2,
+        'USER'        => 3,
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'role_id',
         'name',
+        'phone',
         'email',
         'password',
+        'status'
     ];
 
     /**

@@ -4,26 +4,24 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { getFirstMediaUrl } from '@/helpers/laravelMediaQuery'
 import { PageProps } from '@/types'
 import { Head } from '@inertiajs/react'
-import AddCateringModal from '@/Pages/Caterings/partials/AddCateringModal'
-import EditCateringModal from '@/Pages/Caterings/partials/EditCateringModal'
-import { type CateringProp } from '@/Pages/Caterings/ui/Caterings.d'
+import AddUserModal from '@/Pages/Users/partials/AddUserModal'
+import EditUserModal from '@/Pages/Users/partials/EditUserModal'
+import { type UserProp } from '@/Pages/Users/ui/Users.d'
 
-export default function Caterings({ auth, caterings }: PageProps<CateringProp>) {
+export default function Users({ auth, users }: PageProps<UserProp>) {
   return (
     <AuthenticatedLayout
       user={auth.user}
       header={
         <div className="flex justify-between">
-          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Caterings
-          </h2>
+          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Users</h2>
           <div>
-            <AddCateringModal />
+            <AddUserModal />
           </div>
         </div>
       }
     >
-      <Head title="Caterings" />
+      <Head title="Users" />
 
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -40,10 +38,10 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
                         Phone
                       </th>
                       <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 dark:text-gray-100 text-sm bg-gray-100 dark:bg-gray-900">
-                        Menu
+                        Email
                       </th>
                       <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 dark:text-gray-100 text-sm bg-gray-100 dark:bg-gray-900">
-                        Address
+                        Status
                       </th>
                       <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 dark:text-gray-100 text-sm bg-gray-100 dark:bg-gray-900 text-right w-36">
                         Actions
@@ -51,41 +49,49 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
                     </tr>
                   </thead>
                   <tbody>
-                    {caterings.data.map(catering => {
-                      const logo = getFirstMediaUrl(catering.media, 'logo')
-                      const menuImg = getFirstMediaUrl(catering.media, 'meal_menu')
+                    {users.data.map(user => {
+                      const image = getFirstMediaUrl(user.media, 'image')
 
                       return (
-                        <tr key={catering.id}>
+                        <tr key={user.id}>
                           <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3 flex items-center gap-3">
-                            {logo ? (
+                            {image ? (
                               <img
-                                src={logo}
-                                alt="logo"
-                                className="h-10 w-10 object-cover rounded-full"
+                                src={image}
+                                alt="image"
+                                className={`${
+                                  user.role_id === 2 ? 'outline outline-indigo-500' : ''
+                                } h-10 w-10 object-cover rounded-full`}
                               />
                             ) : (
-                              <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                              <div
+                                className={`${
+                                  user.role_id === 2 ? 'outline outline-indigo-500' : ''
+                                } h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700`}
+                              ></div>
                             )}
-                            {catering.name}
-                          </td>
-                          <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                            {catering.phone}
-                          </td>
-                          <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                            {menuImg && (
-                              <a href={menuImg} target="_blank">
-                                <img src={menuImg} alt="menu" className="h-10 w-10 object-fit" />
-                              </a>
+                            {user.name}
+                            {user.role_id === 2 ? (
+                              <span className="bg-indigo-500 px-1.5 rounded-full text-white text-sm">
+                                Manager
+                              </span>
+                            ) : (
+                              ''
                             )}
                           </td>
                           <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                            {catering.address}
+                            {user.phone}
+                          </td>
+                          <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
+                            {user.email}
+                          </td>
+                          <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
+                            {user.status ? 'Active' : 'Inactive'}
                           </td>
                           <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
                             <div className="flex gap-1 justify-end">
-                              <EditCateringModal catering={catering} />
-                              <DeleteItem route={route('caterings.destroy', catering.id)} />
+                              <EditUserModal user={user} />
+                              <DeleteItem route={route('users.destroy', user.id)} />
                             </div>
                           </td>
                         </tr>
@@ -95,7 +101,7 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
                 </table>
               </div>
 
-              <Pagination links={caterings.links} />
+              <Pagination links={users.links} />
             </div>
           </div>
         </div>

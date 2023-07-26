@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'email'    => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ];
     }
@@ -41,11 +41,21 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        $authAttempt = Auth::attempt($this->only('email', 'password'), $this->boolean('remember'));
+        $userStatus = auth()->user()?->status;
+
+        if (!$authAttempt || $userStatus === 0) {
             RateLimiter::hit($this->throttleKey());
 
+            $message = trans('auth.failed');
+
+            if ($userStatus === 0) {
+                Auth::logout(auth()->user());
+                $message = 'Your account is not active. Please contact the administrator.';
+            }
+
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => $message,
             ]);
         }
 
@@ -59,7 +69,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -80,6 +90,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input('email')) . '|' . $this->ip());
     }
 }

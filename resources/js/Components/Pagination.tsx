@@ -5,6 +5,8 @@ type PaginationProps = {
 }
 
 export default function Pagination({ links }: PaginationProps) {
+  if (links.length < 4) return null
+
   return (
     <div className="flex items-center justify-end gap-1 mt-6">
       {links.map((page, index) => (
