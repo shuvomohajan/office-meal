@@ -1,3 +1,20 @@
+# Work Flow
+
+## Resources
+
+### See the database schema from [here](https://excalidraw.com/#room=ec2a9cdf7246d61f4c06,T3vHNyIOOK-883WUhp6kbQ) for better understanding.
+
+## TODO List
+
+- [x] Catering module
+- [ ] Catering payment module
+- [ ] Meal module
+- [ ] Meal routine module
+- [x] User module
+- [ ] User payment module
+- [ ] User meal module
+- [ ] Dashboard analytics module
+
 # Laravel Application Setup Guide
 
 This guide provides step-by-step instructions for setting up a Laravel application. Laravel is a popular PHP framework that offers a clean and elegant syntax, making it easy to build web applications quickly.
