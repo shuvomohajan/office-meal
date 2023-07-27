@@ -9,6 +9,7 @@ import { getFirstMediaUrl } from '@/helpers/laravelMediaQuery'
 import { Switch } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect, useState } from 'react'
+import { type User } from '@/Pages/Users/ui/Users.d'
 
 type EditUserProps = {
   user: User
@@ -40,7 +41,7 @@ export default function EditUserModal({ user }: EditUserProps) {
     post(route('users.update', user.id), {
       onSuccess: () => {
         closeModal()
-        reset()
+        reset('image', 'remove_image')
       }
     })
   }

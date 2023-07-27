@@ -75,7 +75,7 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
                           <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
                             {menuImg && (
                               <a href={menuImg} target="_blank">
-                                <img src={menuImg} alt="menu" className="h-10 w-10 object-fit" />
+                                <img src={menuImg} alt="menu" className="h-10 w-10 object-cover" />
                               </a>
                             )}
                           </td>

@@ -1,10 +1,4 @@
-type MediaCollection = {
-  original_url: string
-  collection_name: string
-  size: number
-}
-
-type User = {
+export type User = {
   id: number
   role_id: number
   name: string
@@ -14,12 +8,6 @@ type User = {
   media: MediaCollection[]
   created_at: string
   updated_at: string
-}
-
-type Link = {
-  url: string
-  label: string
-  active: boolean
 }
 
 export type UserProp = {

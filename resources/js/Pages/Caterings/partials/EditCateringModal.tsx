@@ -45,7 +45,7 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
     post(route('caterings.update', catering.id), {
       onSuccess: () => {
         closeModal()
-        reset()
+        reset('logo', 'meal_menu', 'remove_logo', 'remove_meal_menu')
       }
     })
   }
