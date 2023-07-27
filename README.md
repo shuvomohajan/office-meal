@@ -8,7 +8,7 @@
 
 - [x] Catering module
 - [ ] Catering payment module
-- [-] Meal module
+- [ ] Meal module
 - [ ] Meal routine module
 - [x] User module
 - [ ] User payment module
