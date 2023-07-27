@@ -7,6 +7,7 @@ import { Head } from '@inertiajs/react'
 import AddUserModal from '@/Pages/Users/partials/AddUserModal'
 import EditUserModal from '@/Pages/Users/partials/EditUserModal'
 import { type UserProp } from '@/Pages/Users/ui/Users.d'
+import Badge from '@/Components/Badge'
 
 export default function Users({ auth, users }: PageProps<UserProp>) {
   return (
@@ -72,9 +73,11 @@ export default function Users({ auth, users }: PageProps<UserProp>) {
                             )}
                             {user.name}
                             {user.role_id === 2 ? (
-                              <span className="bg-indigo-500 px-1.5 rounded-full text-white text-sm">
-                                Manager
-                              </span>
+                              <div>
+                                <Badge className="bg-indigo-500 dark:bg-indigo-500 text-white">
+                                  Manager
+                                </Badge>
+                              </div>
                             ) : (
                               ''
                             )}
@@ -86,7 +89,11 @@ export default function Users({ auth, users }: PageProps<UserProp>) {
                             {user.email}
                           </td>
                           <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                            {user.status ? 'Active' : 'Inactive'}
+                            {user.status ? (
+                              'Active'
+                            ) : (
+                              <Badge className="bg-red-500 dark:bg-red-500 text-white">Inactive</Badge>
+                            )}
                           </td>
                           <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
                             <div className="flex gap-1 justify-end">
