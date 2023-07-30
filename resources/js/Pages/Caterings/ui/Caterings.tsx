@@ -1,12 +1,11 @@
 import DeleteItem from '@/Components/DeleteItem'
 import Pagination from '@/Components/Pagination'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { getFirstMediaUrl } from '@/helpers/laravelMediaQuery'
-import { PageProps } from '@/types'
-import { Head } from '@inertiajs/react'
 import AddCateringModal from '@/Pages/Caterings/partials/AddCateringModal'
 import EditCateringModal from '@/Pages/Caterings/partials/EditCateringModal'
 import { type CateringProp } from '@/Pages/Caterings/ui/Caterings.d'
+import { PageProps } from '@/types'
+import { Head } from '@inertiajs/react'
 
 export default function Caterings({ auth, caterings }: PageProps<CateringProp>) {
   return (
@@ -52,15 +51,12 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
                   </thead>
                   <tbody>
                     {caterings.data.map(catering => {
-                      const logo = getFirstMediaUrl(catering.media, 'logo')
-                      const menuImg = getFirstMediaUrl(catering.media, 'meal_menu')
-
                       return (
                         <tr key={catering.id}>
                           <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3 flex items-center gap-3">
-                            {logo ? (
+                            {catering.logoUrl ? (
                               <img
-                                src={logo}
+                                src={catering.logoUrl}
                                 alt="logo"
                                 className="h-10 w-10 object-cover rounded-full"
                               />
@@ -73,9 +69,13 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
                             {catering.phone}
                           </td>
                           <td className="border-b border-gray-200 dark:border-gray-900 px-4 py-3">
-                            {menuImg && (
-                              <a href={menuImg} target="_blank">
-                                <img src={menuImg} alt="menu" className="h-10 w-10 object-cover" />
+                            {catering.mealMenuUrl && (
+                              <a href={catering.mealMenuUrl} target="_blank">
+                                <img
+                                  src={catering.mealMenuUrl}
+                                  alt="menu"
+                                  className="h-10 w-10 object-cover"
+                                />
                               </a>
                             )}
                           </td>
@@ -95,7 +95,7 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
                 </table>
               </div>
 
-              <Pagination links={caterings.links} />
+              <Pagination links={caterings.meta.links} />
             </div>
           </div>
         </div>

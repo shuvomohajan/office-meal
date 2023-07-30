@@ -10,12 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('catering_payments', function (Blueprint $table) {
+        Schema::create('manager_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('catering_id')->constrained()->cascadeOnDelete();
-            $table->tinyInteger('payment_method')->default(1);
-            $table->integer('amount');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('catering_payments');
+        Schema::dropIfExists('manager_histories');
     }
 };

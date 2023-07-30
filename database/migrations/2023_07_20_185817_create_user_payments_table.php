@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('user_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->tinyInteger('payment_method');
+            $table->tinyInteger('payment_method')->default(1);
             $table->integer('amount');
             $table->timestamps();
         });

@@ -25,6 +25,8 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
     email: catering.email || '',
     website: catering.website || '',
     status: catering.status || false,
+    logoUrl: catering.logoUrl || null,
+    mealMenuUrl: catering.mealMenuUrl || null,
     logo: null as File | null,
     meal_menu: null as File | null,
     remove_logo: false,
@@ -44,14 +46,11 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
 
     post(route('caterings.update', catering.id), {
       onSuccess: () => {
+        reset('logo', 'meal_menu', 'remove_logo', 'remove_meal_menu', 'logoUrl', 'mealMenuUrl')
         closeModal()
-        reset('logo', 'meal_menu', 'remove_logo', 'remove_meal_menu')
       }
     })
   }
-
-  const logo = getFirstMediaUrl(catering.media, 'logo')
-  const menuImg = getFirstMediaUrl(catering.media, 'meal_menu')
 
   useEffect(() => {
     return () => {
@@ -66,7 +65,7 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
       </IconButton>
 
       <Modal show={isOpen} onClose={closeModal}>
-        <form className="p-6" onSubmit={submit}>
+        <form className="md:p-6" onSubmit={submit}>
           <h2 className="text-md font-medium text-gray-900 dark:text-gray-100">Edit Catering</h2>
           <div className="mt-4">
             <InputLabel htmlFor="name" value="Name" />
@@ -161,9 +160,13 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
           <div className="mt-4">
             <InputLabel htmlFor="logo" value="Logo" />
 
-            {!data.remove_logo && logo ? (
+            {!data.remove_logo && data.logoUrl ? (
               <div className="relative w-20 h-20 my-2">
-                <img src={logo} alt="logo" className="w-full h-full object-cover border rounded" />
+                <img
+                  src={data.logoUrl}
+                  alt="logo"
+                  className="w-full h-full object-cover border rounded"
+                />
                 <IconButton
                   rounded
                   type="button"
@@ -191,10 +194,10 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
           <div className="mt-4">
             <InputLabel htmlFor="meal_menu" value="Meal Menu Image" />
 
-            {!data.remove_meal_menu && menuImg ? (
+            {!data.remove_meal_menu && data.mealMenuUrl ? (
               <div className="relative w-20 h-20 my-2">
                 <img
-                  src={menuImg}
+                  src={data.mealMenuUrl}
                   alt="meal_menu"
                   className="w-full h-full object-cover border rounded"
                 />

@@ -53,7 +53,7 @@ export default function AddCateringModal() {
       </PrimaryButton>
 
       <Modal show={isOpen} onClose={closeModal}>
-        <form className="p-6" onSubmit={submit}>
+        <form className="md:p-6" onSubmit={submit}>
           <h2 className="text-md font-medium text-gray-900 dark:text-gray-100">Add New Catering</h2>
 
           <div className="mt-4">

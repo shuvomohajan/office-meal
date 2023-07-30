@@ -78,4 +78,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(CateringPayment::class);
     }
+
+    public function managerHistories(): HasMany
+    {
+        return $this->hasMany(ManagerHistory::class);
+    }
 }

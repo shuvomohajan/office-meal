@@ -6,14 +6,17 @@ export type Catering = {
   email: string
   website: string
   status: boolean
-  media: MediaCollection[]
   created_at: string
   updated_at: string
+  logoUrl?: string
+  mealMenuUrl?: string
 }
 
 export type CateringProp = {
   caterings: {
     data: Catering[]
-    links: Link[]
+    meta: {
+      links: Link[]
+    }
   }
 }

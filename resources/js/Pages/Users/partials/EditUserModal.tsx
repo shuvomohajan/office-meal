@@ -5,11 +5,10 @@ import InputLabel from '@/Components/InputLabel'
 import Modal from '@/Components/Modal'
 import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
-import { getFirstMediaUrl } from '@/helpers/laravelMediaQuery'
+import { type User } from '@/Pages/Users/ui/Users.d'
 import { Switch } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect, useState } from 'react'
-import { type User } from '@/Pages/Users/ui/Users.d'
 
 type EditUserProps = {
   user: User
@@ -23,6 +22,7 @@ export default function EditUserModal({ user }: EditUserProps) {
     phone: user.phone || '',
     email: user.email || '',
     status: user.status || false,
+    imageUrl: user.imageUrl || null,
     image: null as File | null,
     remove_image: false
   })
@@ -41,12 +41,10 @@ export default function EditUserModal({ user }: EditUserProps) {
     post(route('users.update', user.id), {
       onSuccess: () => {
         closeModal()
-        reset('image', 'remove_image')
+        reset('image', 'remove_image', 'imageUrl')
       }
     })
   }
-
-  const image = getFirstMediaUrl(user.media, 'image')
 
   useEffect(() => {
     return () => {
@@ -61,8 +59,9 @@ export default function EditUserModal({ user }: EditUserProps) {
       </IconButton>
 
       <Modal show={isOpen} onClose={closeModal}>
-        <form className="p-6" onSubmit={submit}>
+        <form className="md:p-6" onSubmit={submit}>
           <h2 className="text-md font-medium text-gray-900 dark:text-gray-100">Edit User</h2>
+
           <div className="mt-4">
             <InputLabel htmlFor="name" value="Name" />
             <TextInput
@@ -128,9 +127,13 @@ export default function EditUserModal({ user }: EditUserProps) {
           <div className="mt-4">
             <InputLabel htmlFor="image" value="Logo" />
 
-            {!data.remove_image && image ? (
+            {!data.remove_image && data.imageUrl ? (
               <div className="relative w-20 h-20 my-2">
-                <img src={image} alt="image" className="w-full h-full object-cover border rounded" />
+                <img
+                  src={data.imageUrl}
+                  alt="image"
+                  className="w-full h-full object-cover border rounded"
+                />
                 <IconButton
                   rounded
                   type="button"

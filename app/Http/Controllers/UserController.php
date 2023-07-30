@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Inertia\Inertia;
 
@@ -14,12 +15,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Users/index', [
-            'users' => User::with('media')
-            ->where('role_id', '!=', User::role['SUPER_ADMIN'])
-            ->latest()
-            ->paginate(10)
-        ]);
+        $users = UserResource::collection(User::with('media')
+        ->where('role_id', '!=', User::role['SUPER_ADMIN'])
+        ->latest()
+        ->paginate(10));
+
+        return Inertia::render('Users/index', compact('users'));
     }
 
     /**

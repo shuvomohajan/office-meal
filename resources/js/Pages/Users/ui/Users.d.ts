@@ -5,14 +5,16 @@ export type User = {
   phone: string
   email: string
   status: boolean
-  media: MediaCollection[]
   created_at: string
   updated_at: string
+  imageUrl?: string
 }
 
 export type UserProp = {
   users: {
     data: User[]
-    links: Link[]
+    meta: {
+      links: Link[]
+    }
   }
 }

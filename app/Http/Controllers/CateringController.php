@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCateringRequest;
 use App\Http\Requests\UpdateCateringRequest;
+use App\Http\Resources\CateringResource;
 use App\Models\Catering;
 use Inertia\Inertia;
 
@@ -14,9 +15,9 @@ class CateringController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Caterings/index', [
-            'caterings' => Catering::with('media')->latest()->paginate(10),
-        ]);
+        $caterings = CateringResource::collection(Catering::with('media')->latest()->paginate(10));
+
+        return Inertia::render('Caterings/index', compact('caterings'));
     }
 
     /**
