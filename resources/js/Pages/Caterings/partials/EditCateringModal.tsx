@@ -5,11 +5,10 @@ import InputLabel from '@/Components/InputLabel'
 import Modal from '@/Components/Modal'
 import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
-import { getFirstMediaUrl } from '@/helpers/laravelMediaQuery'
+import { type Catering } from '@/Pages/Caterings/ui/Caterings.d'
 import { Switch } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect, useState } from 'react'
-import { type Catering } from '@/Pages/Caterings/ui/Caterings.d'
 
 type EditCateringProps = {
   catering: Catering
@@ -25,8 +24,6 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
     email: catering.email || '',
     website: catering.website || '',
     status: catering.status || false,
-    logoUrl: catering.logoUrl || null,
-    mealMenuUrl: catering.mealMenuUrl || null,
     logo: null as File | null,
     meal_menu: null as File | null,
     remove_logo: false,
@@ -46,7 +43,7 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
 
     post(route('caterings.update', catering.id), {
       onSuccess: () => {
-        reset('logo', 'meal_menu', 'remove_logo', 'remove_meal_menu', 'logoUrl', 'mealMenuUrl')
+        reset('logo', 'meal_menu', 'remove_logo', 'remove_meal_menu')
         closeModal()
       }
     })
@@ -160,10 +157,10 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
           <div className="mt-4">
             <InputLabel htmlFor="logo" value="Logo" />
 
-            {!data.remove_logo && data.logoUrl ? (
+            {!data.remove_logo && catering.logoUrl ? (
               <div className="relative w-20 h-20 my-2">
                 <img
-                  src={data.logoUrl}
+                  src={catering.logoUrl}
                   alt="logo"
                   className="w-full h-full object-cover border rounded"
                 />
@@ -194,10 +191,10 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
           <div className="mt-4">
             <InputLabel htmlFor="meal_menu" value="Meal Menu Image" />
 
-            {!data.remove_meal_menu && data.mealMenuUrl ? (
+            {!data.remove_meal_menu && catering.mealMenuUrl ? (
               <div className="relative w-20 h-20 my-2">
                 <img
-                  src={data.mealMenuUrl}
+                  src={catering.mealMenuUrl}
                   alt="meal_menu"
                   className="w-full h-full object-cover border rounded"
                 />

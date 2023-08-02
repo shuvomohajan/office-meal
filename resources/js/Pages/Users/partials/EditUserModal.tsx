@@ -22,7 +22,6 @@ export default function EditUserModal({ user }: EditUserProps) {
     phone: user.phone || '',
     email: user.email || '',
     status: user.status || false,
-    imageUrl: user.imageUrl || null,
     image: null as File | null,
     remove_image: false
   })
@@ -41,7 +40,7 @@ export default function EditUserModal({ user }: EditUserProps) {
     post(route('users.update', user.id), {
       onSuccess: () => {
         closeModal()
-        reset('image', 'remove_image', 'imageUrl')
+        reset('image', 'remove_image')
       }
     })
   }
@@ -127,10 +126,10 @@ export default function EditUserModal({ user }: EditUserProps) {
           <div className="mt-4">
             <InputLabel htmlFor="image" value="Logo" />
 
-            {!data.remove_image && data.imageUrl ? (
+            {!data.remove_image && user.imageUrl ? (
               <div className="relative w-20 h-20 my-2">
                 <img
-                  src={data.imageUrl}
+                  src={user.imageUrl}
                   alt="image"
                   className="w-full h-full object-cover border rounded"
                 />
