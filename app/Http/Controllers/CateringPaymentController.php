@@ -29,7 +29,9 @@ class CateringPaymentController extends Controller
      */
     public function store(StoreCateringPaymentRequest $request)
     {
-        //
+        CateringPayment::create($request->validated() + ['user_id' => auth()->id()]);
+
+        return back()->with('success', 'Payment added successfully.');
     }
 
     /**

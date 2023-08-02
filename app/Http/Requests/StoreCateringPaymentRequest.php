@@ -11,7 +11,7 @@ class StoreCateringPaymentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreCateringPaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'catering_id' => ['required', 'integer', 'exists:caterings,id'],
+            'amount'      => ['required', 'numeric'],
         ];
     }
 }

@@ -6,6 +6,7 @@ import EditCateringModal from '@/Pages/Caterings/partials/EditCateringModal'
 import { type CateringProp } from '@/Pages/Caterings/ui/Caterings.d'
 import { PageProps } from '@/types'
 import { Head } from '@inertiajs/react'
+import MakeCateringPayment from '../partials/MakeCateringPayment'
 
 export default function Caterings({ auth, caterings }: PageProps<CateringProp>) {
   return (
@@ -16,7 +17,8 @@ export default function Caterings({ auth, caterings }: PageProps<CateringProp>) 
           <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Caterings
           </h2>
-          <div>
+          <div className="flex gap-2">
+            <MakeCateringPayment caterings={caterings.data} />
             <AddCateringModal />
           </div>
         </div>
