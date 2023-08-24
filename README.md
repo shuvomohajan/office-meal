@@ -7,13 +7,14 @@
 ## TODO List
 
 - [x] Catering module
-- [ ] Catering payment module
+- [x] Catering payment module
 - [ ] Meal module
 - [ ] Meal routine module
 - [x] User module
-- [ ] User payment module
+- [x] User payment module
 - [ ] User meal module
-- [ ] Dashboard analytics module
+- [x] Manager module
+- [ ] Dashboard analytics
 
 # Laravel Application Setup Guide
 
@@ -27,7 +28,7 @@ Before you begin, make sure you have the following installed on your system:
 - Composer
 - MySQL or any other supported database
 - Node.js (14.x or higher)
-- Yarn
+- PNPM | Yarn
 - Web server (e.g., Apache or Nginx)
 
 ## Step 1: Clone the Repository
@@ -59,6 +60,8 @@ composer install
 3. Run the following command to install the JavaScript dependencies:
 
 ```bash
+pnpm install
+or
 yarn install
 ```
 
@@ -101,6 +104,8 @@ php artisan db:seed
 1. Run the following command to build your assets using `Vite`:
 
 ```bash
+pnpm dev
+or
 yarn run dev
 ```
 
