@@ -8,6 +8,7 @@ import TextInput from '@/Components/TextInput'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect, useState } from 'react'
 import { type Catering } from '@/Pages/Caterings/ui/Caterings.d'
+import DangerButton from '@/Components/DangerButton'
 
 export default function MakeCateringPayment({ caterings }: { caterings: Catering[] }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -86,6 +87,10 @@ export default function MakeCateringPayment({ caterings }: { caterings: Catering
           </div>
 
           <div className="flex items-center justify-end mt-4">
+            <DangerButton type='button' className="ml-4" onClick={closeModal}>
+              Cancel
+            </DangerButton>
+
             <PrimaryButton className="ml-4" disabled={processing}>
               Save
             </PrimaryButton>
