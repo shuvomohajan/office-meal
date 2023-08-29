@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "clean": "rimraf node_modules yarn.lock package-lock.json pnpm-lock.yaml",
     "build": "tsc && vite build"
   },
   "devDependencies": {
@@ -25,6 +26,7 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
-    "lucide-react": "^0.252.0"
+    "lucide-react": "^0.252.0",
+    "rimraf": "^5.0.1"
   }
 }

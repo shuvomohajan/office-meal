@@ -8,6 +8,7 @@ import TextInput from '@/Components/TextInput'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect, useState } from 'react'
 import { type User } from '@/Pages/Users/ui/Users.d'
+import DangerButton from '@/Components/DangerButton'
 
 export default function MakeUserPayment({ users }: { users: User[] }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -86,6 +87,10 @@ export default function MakeUserPayment({ users }: { users: User[] }) {
           </div>
 
           <div className="flex items-center justify-end mt-4">
+            <DangerButton type='button' className="ml-4" onClick={closeModal}>
+              Cancel
+            </DangerButton>
+
             <PrimaryButton className="ml-4" disabled={processing}>
               Save
             </PrimaryButton>

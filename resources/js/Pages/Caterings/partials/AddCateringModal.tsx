@@ -1,3 +1,4 @@
+import DangerButton from '@/Components/DangerButton'
 import Icon from '@/Components/Icon'
 import InputError from '@/Components/InputError'
 import InputLabel from '@/Components/InputLabel'
@@ -191,6 +192,10 @@ export default function AddCateringModal() {
           </div>
 
           <div className="flex items-center justify-end mt-4">
+            <DangerButton type='button' className="ml-4" onClick={closeModal}>
+              Cancel
+            </DangerButton>
+            
             <PrimaryButton className="ml-4" disabled={processing}>
               Save
             </PrimaryButton>
