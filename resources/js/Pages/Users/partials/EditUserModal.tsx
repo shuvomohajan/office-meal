@@ -4,6 +4,7 @@ import InputError from '@/Components/InputError'
 import InputLabel from '@/Components/InputLabel'
 import Modal from '@/Components/Modal'
 import PrimaryButton from '@/Components/PrimaryButton'
+import SecondaryButton from '@/Components/SecondaryButton'
 import TextInput from '@/Components/TextInput'
 import { type User } from '@/Pages/Users/ui/Users.d'
 import { Switch } from '@headlessui/react'
@@ -158,6 +159,10 @@ export default function EditUserModal({ user }: EditUserProps) {
           </div>
 
           <div className="flex items-center justify-end mt-4">
+            <SecondaryButton type="button" className="ml-4" onClick={closeModal}>
+              Cancel
+            </SecondaryButton>
+
             <PrimaryButton className="ml-4" disabled={processing}>
               Update
             </PrimaryButton>

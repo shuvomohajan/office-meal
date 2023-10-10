@@ -1,9 +1,9 @@
-import DangerButton from '@/Components/DangerButton'
 import Icon from '@/Components/Icon'
 import InputError from '@/Components/InputError'
 import InputLabel from '@/Components/InputLabel'
 import Modal from '@/Components/Modal'
 import PrimaryButton from '@/Components/PrimaryButton'
+import SecondaryButton from '@/Components/SecondaryButton'
 import TextInput from '@/Components/TextInput'
 import { Switch } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
@@ -141,9 +141,9 @@ export default function AddUserModal() {
           </div>
 
           <div className="flex items-center justify-end mt-4">
-            <DangerButton type='button' className="ml-4" onClick={closeModal}>
+            <SecondaryButton type="button" className="ml-4" onClick={closeModal}>
               Cancel
-            </DangerButton>
+            </SecondaryButton>
 
             <PrimaryButton className="ml-4" disabled={processing}>
               Save

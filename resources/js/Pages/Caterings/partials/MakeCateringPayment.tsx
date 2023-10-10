@@ -3,12 +3,12 @@ import InputError from '@/Components/InputError'
 import InputLabel from '@/Components/InputLabel'
 import Modal from '@/Components/Modal'
 import PrimaryButton from '@/Components/PrimaryButton'
+import SecondaryButton from '@/Components/SecondaryButton'
 import Select from '@/Components/Select'
 import TextInput from '@/Components/TextInput'
+import { type Catering } from '@/Pages/Caterings/ui/Caterings.d'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect, useState } from 'react'
-import { type Catering } from '@/Pages/Caterings/ui/Caterings.d'
-import DangerButton from '@/Components/DangerButton'
 
 export default function MakeCateringPayment({ caterings }: { caterings: Catering[] }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -50,7 +50,7 @@ export default function MakeCateringPayment({ caterings }: { caterings: Catering
   return (
     <>
       <PrimaryButton onClick={openModal} className="flex gap-1">
-        <Icon name="DollarSign" /> Make Payment
+        <Icon name="DollarSign" /> Catering Payment
       </PrimaryButton>
 
       <Modal show={isOpen} onClose={closeModal}>
@@ -87,9 +87,9 @@ export default function MakeCateringPayment({ caterings }: { caterings: Catering
           </div>
 
           <div className="flex items-center justify-end mt-4">
-            <DangerButton type='button' className="ml-4" onClick={closeModal}>
+            <SecondaryButton type="button" className="ml-4" onClick={closeModal}>
               Cancel
-            </DangerButton>
+            </SecondaryButton>
 
             <PrimaryButton className="ml-4" disabled={processing}>
               Save
