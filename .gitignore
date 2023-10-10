@@ -17,4 +17,5 @@ yarn-error.log
 pnpm-lock.yaml
 /.fleet
 /.idea
+.php-cs-fixer.cache
 
