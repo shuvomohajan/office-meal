@@ -17,10 +17,10 @@ class UserSeeder extends Seeder
     {
         \App\Models\User::factory()->create([
             'role_id' => User::role['SUPER_ADMIN'],
-            'name'    => 'Super Admin',
-            'phone'   => '01838501660',
-            'email'   => 'super@mail.com',
-            'status'  => 1,
+            'name' => 'Super Admin',
+            'phone' => '01838501660',
+            'email' => 'super@mail.com',
+            'status' => 1,
         ]);
     }
 }

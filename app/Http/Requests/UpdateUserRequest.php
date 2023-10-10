@@ -25,10 +25,10 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'image' => ['nullable', 'image', 'max:1024', 'mimes:jpg,jpeg,png,gif,webp,svg'],
-            'name'  => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'numeric', 'digits:11', Rule::unique('users')->ignore($this->user->id)],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->user->id)],
-            'status'=> ['required', 'boolean'],
+            'status' => ['required', 'boolean'],
         ];
     }
 }

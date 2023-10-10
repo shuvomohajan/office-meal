@@ -21,8 +21,8 @@ class MealFactory extends Factory
 
         return [
             'catering_id' => fake()->randomElement($cateringIds),
-            'name'        => fake()->name(),
-            'price'       => fake()->randomFloat(2, 60, 100),
+            'name' => fake()->name(),
+            'price' => fake()->randomFloat(2, 60, 100),
         ];
     }
 }

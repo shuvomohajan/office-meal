@@ -19,10 +19,10 @@ class User extends Authenticatable implements HasMedia
     use Notifiable;
     use InteractsWithMedia;
 
-    const role = [
+    public const role = [
         'SUPER_ADMIN' => 1,
-        'MANAGER'     => 2,
-        'USER'        => 3,
+        'MANAGER' => 2,
+        'USER' => 3,
     ];
 
     /**
@@ -56,7 +56,7 @@ class User extends Authenticatable implements HasMedia
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password'          => 'hashed',
+        'password' => 'hashed',
     ];
 
     public function registerMediaCollections(): void

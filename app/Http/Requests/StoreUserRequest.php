@@ -24,10 +24,10 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'image' => ['nullable', 'image', 'max:1024', 'mimes:jpg,jpeg,png,gif,webp,svg'],
-            'name'  => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'numeric', 'digits:11', 'unique:' . User::class],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
-            'status'=> ['required', 'boolean'],
+            'status' => ['required', 'boolean'],
         ];
     }
 }

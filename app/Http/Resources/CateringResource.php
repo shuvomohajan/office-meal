@@ -15,15 +15,15 @@ class CateringResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'              => $this->id,
-            'name'            => $this->name,
-            'phone'           => $this->phone,
-            'address'         => $this->address,
-            'email'           => $this->email,
-            'website'         => $this->website,
-            'status'          => $this->status,
-            'logoUrl'         => $this->getFirstMediaUrl('logo'),
-            'mealMenuUrl'     => $this->getFirstMediaUrl('meal_menu'),
+            'id' => $this->id,
+            'name' => $this->name,
+            'phone' => $this->phone,
+            'address' => $this->address,
+            'email' => $this->email,
+            'website' => $this->website,
+            'status' => $this->status,
+            'logoUrl' => $this->getFirstMediaUrl('logo'),
+            'mealMenuUrl' => $this->getFirstMediaUrl('meal_menu'),
         ];
     }
 }

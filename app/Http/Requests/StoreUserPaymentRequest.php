@@ -23,7 +23,7 @@ class StoreUserPaymentRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'integer', 'exists:users,id'],
-            'amount'  => ['required', 'numeric'],
+            'amount' => ['required', 'numeric'],
         ];
     }
 }

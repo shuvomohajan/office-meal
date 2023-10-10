@@ -23,7 +23,7 @@ class StoreCateringPaymentRequest extends FormRequest
     {
         return [
             'catering_id' => ['required', 'integer', 'exists:caterings,id'],
-            'amount'      => ['required', 'numeric'],
+            'amount' => ['required', 'numeric'],
         ];
     }
 }
