@@ -14,6 +14,6 @@ class CateringSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Catering::factory(10)->create();
+        \App\Models\Catering::factory(2)->create();
     }
 }
