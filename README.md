@@ -18,17 +18,13 @@
 
 # Laravel Application Setup Guide
 
-This guide provides step-by-step instructions for setting up a Laravel application. Laravel is a popular PHP framework that offers a clean and elegant syntax, making it easy to build web applications quickly.
-
 ## Prerequisites
 
 Before you begin, make sure you have the following installed on your system:
 
-- PHP (7.4 or higher)
 - Composer
-- MySQL or any other supported database
+- PHP (8.2 or higher)
 - Node.js (14.x or higher)
-- PNPM | Yarn
 - Web server (e.g., Apache or Nginx)
 
 ## Step 1: Clone the Repository
@@ -43,13 +39,13 @@ Before you begin, make sure you have the following installed on your system:
 git clone https://github.com/shuvomohajan/office-meal.git
 ```
 
-## Step 2: Install Dependencies
-
-1. Navigate into the project's root directory:
+4. Navigate into the project's root directory:
 
 ```bash
 cd office-meal
 ```
+
+## Step 2: Install Dependencies
 
 2. Run the following command to install the project dependencies using Composer:
 
@@ -79,24 +75,12 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-3. Open the `.env` file and configure the database connection details, such as `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD`, according to your local environment.
-
 ## Step 4: Database Setup
 
-1. Create a new `database` in your MySQL or preferred database system.
-
-2. Update the `.env` file with the newly created database credentials.
-
-3. Run the following command to migrate the database tables:
+1. Run the following command to migrate the database tables:
 
 ```bash
-php artisan migrate
-```
-
-4. If your application uses seeders, run the following command to `seed` the database:
-
-```bash
-php artisan db:seed
+php artisan migrate --seed
 ```
 
 ## Step 5: Serve the Application
