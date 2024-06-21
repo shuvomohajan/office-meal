@@ -16,7 +16,7 @@ export type CateringProp = {
   caterings: {
     data: Catering[]
     meta: {
-      links: Link[]
+      links: PaginationLink[]
     }
   }
 }

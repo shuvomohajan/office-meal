@@ -55,7 +55,7 @@ export default function MakeManager({ users }: { users: User[] }) {
       </PrimaryButton>
 
       <Modal show={isOpen} onClose={closeModal}>
-        <form className="md:p-6" onSubmit={submit}>
+        <form className="md:p-6 p-4" onSubmit={submit}>
           <h2 className="text-md font-medium text-gray-900 dark:text-gray-100">Make New Manager</h2>
 
           <div className="mt-4">
@@ -73,32 +73,33 @@ export default function MakeManager({ users }: { users: User[] }) {
             <InputError message={errors.user_id} className="mt-2" />
           </div>
 
-          <div className="mt-4">
-            <InputLabel htmlFor="start_date" value="Start Date" />
-            <TextInput
-              id="start_date"
-              type="date"
-              name="start_date"
-              value={data.start_date}
-              className="mt-1 block w-full"
-              autoComplete="start_date"
-              onChange={e => setData('start_date', e.target.value)}
-            />
-            <InputError message={errors.start_date} className="mt-2" />
-          </div>
-
-          <div className="mt-4">
-            <InputLabel htmlFor="end_date" value="End Date" />
-            <TextInput
-              id="end_date"
-              type="date"
-              name="end_date"
-              value={data.end_date}
-              className="mt-1 block w-full"
-              autoComplete="end_date"
-              onChange={e => setData('end_date', e.target.value)}
-            />
-            <InputError message={errors.end_date} className="mt-2" />
+          <div className="grid gap-4 grid-cols-2">
+            <div className="mt-4">
+              <InputLabel htmlFor="start_date" value="Start Date" />
+              <TextInput
+                id="start_date"
+                type="date"
+                name="start_date"
+                value={data.start_date}
+                className="mt-1 block w-full"
+                autoComplete="start_date"
+                onChange={e => setData('start_date', e.target.value)}
+              />
+              <InputError message={errors.start_date} className="mt-2" />
+            </div>
+            <div className="mt-4">
+              <InputLabel htmlFor="end_date" value="End Date" />
+              <TextInput
+                id="end_date"
+                type="date"
+                name="end_date"
+                value={data.end_date}
+                className="mt-1 block w-full"
+                autoComplete="end_date"
+                onChange={e => setData('end_date', e.target.value)}
+              />
+              <InputError message={errors.end_date} className="mt-2" />
+            </div>
           </div>
 
           <div className="flex items-center justify-end mt-4">

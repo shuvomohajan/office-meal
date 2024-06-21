@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react'
 
 type PaginationProps = {
-  links: Link[]
+  links: PaginationLink[]
 }
 
 export default function Pagination({ links }: PaginationProps) {

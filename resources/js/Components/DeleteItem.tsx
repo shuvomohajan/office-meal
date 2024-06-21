@@ -1,8 +1,6 @@
 import Icon from '@/Components/Icon'
 import { useForm } from '@inertiajs/react'
 import { useState } from 'react'
-import DangerButton from './DangerButton'
-import SecondaryButton from './SecondaryButton'
 import IconButton from './IconButton'
 
 type DeleteItemProps = {

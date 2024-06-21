@@ -1,12 +1,11 @@
-import { useState, PropsWithChildren, ReactNode, useEffect } from 'react'
 import ApplicationLogo from '@/Components/ApplicationLogo'
 import Dropdown from '@/Components/Dropdown'
 import NavLink from '@/Components/NavLink'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink'
-import { Link } from '@inertiajs/react'
+import { ThemeToggle } from '@/Components/ThemeToggle'
 import { User } from '@/types'
-import { Switch } from '@headlessui/react'
-import Icon from '@/Components/Icon'
+import { Link } from '@inertiajs/react'
+import { PropsWithChildren, ReactNode, useState } from 'react'
 
 export default function Authenticated({
   user,
@@ -14,33 +13,6 @@ export default function Authenticated({
   children
 }: PropsWithChildren<{ user: User; header?: ReactNode }>) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false)
-
-  const [isDarkMode, setIsDarkMode] = useState(false)
-
-  const setDarkMode = (enabled: boolean) => {
-    setIsDarkMode(enabled)
-
-    if (enabled) {
-      document.documentElement.classList.add('dark')
-      localStorage.theme = 'dark'
-    } else {
-      document.documentElement.classList.remove('dark')
-      localStorage.theme = 'light'
-    }
-  }
-
-  useEffect(() => {
-    if (
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      setIsDarkMode(true)
-      document.documentElement.classList.add('dark')
-    } else {
-      setIsDarkMode(false)
-      document.documentElement.classList.remove('dark')
-    }
-  }, [])
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -54,7 +26,7 @@ export default function Authenticated({
                 </Link>
               </div>
 
-              <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+              <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                   Dashboard
                 </NavLink>
@@ -67,21 +39,10 @@ export default function Authenticated({
               </div>
             </div>
 
-            <div className="hidden sm:flex sm:items-center sm:ml-6">
-              <Switch
-                checked={isDarkMode}
-                onChange={setDarkMode}
-                className="bg-gray-200 dark:bg-gray-500 relative inline-flex h-7 w-12 items-center rounded-full"
-              >
-                <span className="sr-only">Enable notifications</span>
-                <span className="translate-x-1 dark:translate-x-6 flex justify-center items-center h-5 w-5 transform rounded-full bg-white dark:bg-gray-800 transition">
-                  <Icon
-                    name={isDarkMode ? 'MoonStar' : 'Sun'}
-                    className="text-gray-700 dark:text-gray-200"
-                  />
-                </span>
-              </Switch>
-              <div className="ml-3 relative">
+            <div className="hidden sm:flex sm:items-center sm:ms-6">
+              {/* <DarkMode /> */}
+              <ThemeToggle />
+              <div className="ms-3 relative">
                 <Dropdown>
                   <Dropdown.Trigger>
                     <span className="inline-flex rounded-md">
@@ -92,7 +53,7 @@ export default function Authenticated({
                         {user.name}
 
                         <svg
-                          className="ml-2 -mr-0.5 h-4 w-4"
+                          className="ms-2 -me-0.5 h-4 w-4"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"
                           fill="currentColor"
@@ -117,7 +78,7 @@ export default function Authenticated({
               </div>
             </div>
 
-            <div className="-mr-2 flex items-center sm:hidden">
+            <div className="-me-2 flex items-center sm:hidden">
               <button
                 onClick={() => setShowingNavigationDropdown(previousState => !previousState)}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
@@ -147,15 +108,6 @@ export default function Authenticated({
           <div className="pt-2 pb-3 space-y-1">
             <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
               Dashboard
-            </ResponsiveNavLink>
-            <ResponsiveNavLink
-              href={route('caterings.index')}
-              active={route().current('caterings.index')}
-            >
-              Caterings
-            </ResponsiveNavLink>
-            <ResponsiveNavLink href={route('users.index')} active={route().current('users.index')}>
-              Users
             </ResponsiveNavLink>
           </div>
 

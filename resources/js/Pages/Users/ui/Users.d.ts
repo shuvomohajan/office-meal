@@ -14,7 +14,7 @@ export type UserProp = {
   users: {
     data: User[]
     meta: {
-      links: Link[]
+      links: PaginationLink[]
     }
   }
 }

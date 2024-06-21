@@ -6,5 +6,8 @@
   "php-cs-fixer.config": ".php-cs-fixer.php",
   "[php]": {
     "editor.defaultFormatter": "junstyle.php-cs-fixer"
-  }
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "prettier.enable": true
 }
