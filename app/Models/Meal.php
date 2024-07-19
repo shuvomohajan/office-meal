@@ -37,9 +37,4 @@ class Meal extends Model implements HasMedia
     {
         return $this->belongsToMany(User::class);
     }
-
-    public function mealRoutines(): HasMany
-    {
-        return $this->hasMany(MealRoutine::class);
-    }
 }
