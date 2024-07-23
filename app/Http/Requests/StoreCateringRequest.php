@@ -23,6 +23,10 @@ class StoreCateringRequest extends FormRequest
             'email' => ['nullable', 'email', 'max:255'],
             'website' => ['nullable', 'url', 'max:255'],
             'status' => ['boolean'],
+
+            'meals' => ['nullable', 'array'],
+            'meals.*.name' => ['required', 'string', 'max:255'],
+            'meals.*.price' => ['required', 'numeric', 'max:255']
         ];
     }
 }

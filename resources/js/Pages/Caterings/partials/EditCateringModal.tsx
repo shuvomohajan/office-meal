@@ -10,6 +10,7 @@ import { type Catering } from '@/Pages/Caterings/ui/Caterings.d'
 import { Switch } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect, useState } from 'react'
+import AddMeals from './Meals/AddMeals'
 
 type EditCateringProps = {
   catering: Catering
@@ -28,7 +29,8 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
     logo: null as File | null,
     meal_menu: null as File | null,
     remove_logo: false,
-    remove_meal_menu: false
+    remove_meal_menu: false,
+    meals: catering.meals
   })
 
   const openModal = () => {
@@ -49,6 +51,14 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
       }
     })
   }
+
+  const setMeals = (meals: Meal[]) => {
+    setData('meals', meals)
+  }
+
+  useEffect(() => {
+    setData('meals', catering.meals)
+  }, [catering.meals])
 
   useEffect(() => {
     return () => {
@@ -221,6 +231,10 @@ export default function EditCateringModal({ catering }: EditCateringProps) {
             />
 
             <InputError message={errors.meal_menu} className="mt-2" />
+          </div>
+
+          <div className="mt-8">
+            <AddMeals meals={data.meals} setMeals={setMeals} />
           </div>
 
           <div className="flex items-center justify-end mt-4">

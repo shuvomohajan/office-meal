@@ -10,6 +10,7 @@ export type Catering = {
   updated_at: string
   logoUrl?: string
   mealMenuUrl?: string
+  meals: Meal[]
 }
 
 export type CateringProp = {

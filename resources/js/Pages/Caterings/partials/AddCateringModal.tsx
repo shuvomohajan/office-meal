@@ -8,18 +8,20 @@ import TextInput from '@/Components/TextInput'
 import { Switch } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useEffect, useState } from 'react'
+import AddMeals from './Meals/AddMeals'
 
 export default function AddCateringModal() {
   const [isOpen, setIsOpen] = useState(false)
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post, processing, errors, reset } = useForm<CateringFormType>({
     name: '',
     phone: '',
     address: '',
     email: '',
     website: '',
     status: true,
-    logo: null as File | null,
-    meal_menu: null as File | null
+    logo: null,
+    meal_menu: null,
+    meals: []
   })
 
   const closeModal = () => {
@@ -39,6 +41,10 @@ export default function AddCateringModal() {
         closeModal()
       }
     })
+  }
+
+  const setMeals = (meals: Meal[]) => {
+    setData('meals', meals)
   }
 
   useEffect(() => {
@@ -189,6 +195,10 @@ export default function AddCateringModal() {
             />
 
             <InputError message={errors.meal_menu} className="mt-2" />
+          </div>
+
+          <div className="mt-8">
+            <AddMeals meals={data.meals} setMeals={setMeals} />
           </div>
 
           <div className="flex items-center justify-end mt-4">

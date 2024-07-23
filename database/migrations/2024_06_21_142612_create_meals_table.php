@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('catering_id')->constrained()->cascadeOnDelete();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->integer('price');
             $table->string('description')->nullable();
             $table->boolean('status')->default(true);

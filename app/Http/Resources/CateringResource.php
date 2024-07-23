@@ -24,6 +24,7 @@ class CateringResource extends JsonResource
             'status' => $this->status,
             'logoUrl' => $this->getFirstMediaUrl('logo'),
             'mealMenuUrl' => $this->getFirstMediaUrl('meal_menu'),
+            'meals' => $this->whenLoaded('meals', $this->meals)
         ];
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Catering;
+use Illuminate\Support\Facades\DB;
+use App\Http\Resources\CateringResource;
 use App\Http\Requests\StoreCateringRequest;
 use App\Http\Requests\UpdateCateringRequest;
-use App\Http\Resources\CateringResource;
-use App\Models\Catering;
-use Inertia\Inertia;
 
 class CateringController extends Controller
 {
@@ -15,7 +16,7 @@ class CateringController extends Controller
      */
     public function index()
     {
-        $caterings = CateringResource::collection(Catering::with('media')->latest()->paginate(10));
+        $caterings = CateringResource::collection(Catering::with('media', 'meals')->latest()->paginate(10));
 
         return Inertia::render('Caterings/index', compact('caterings'));
     }
@@ -25,15 +26,19 @@ class CateringController extends Controller
      */
     public function store(StoreCateringRequest $request)
     {
-        $catering = Catering::create($request->validated());
+        DB::transaction(function () use ($request) {
+            $catering = Catering::create($request->validated());
 
-        if ($request->hasFile('logo')) {
-            $catering->addMediaFromRequest('logo')->toMediaCollection('logo');
-        }
+            $catering->meals()->createMany($request->validated()['meals']);
 
-        if ($request->hasFile('meal_menu')) {
-            $catering->addMediaFromRequest('meal_menu')->toMediaCollection('meal_menu');
-        }
+            if ($request->hasFile('logo')) {
+                $catering->addMediaFromRequest('logo')->toMediaCollection('logo');
+            }
+
+            if ($request->hasFile('meal_menu')) {
+                $catering->addMediaFromRequest('meal_menu')->toMediaCollection('meal_menu');
+            }
+        });
 
         return back()->with('success', 'Catering created.');
     }
@@ -43,23 +48,32 @@ class CateringController extends Controller
      */
     public function update(UpdateCateringRequest $request, Catering $catering)
     {
-        $catering->update($request->validated());
+        DB::transaction(function () use ($request, $catering) {
+            $catering->update($request->validated());
 
-        if ($request->remove_logo) {
-            $catering->clearMediaCollection('logo');
-        }
+            foreach ($request->validated()['meals'] as $meal) {
+                $catering->meals()->updateOrCreate([
+                    'id' => $meal['id'],
+                    'catering_id' => $catering->id
+                ], $meal);
+            }
 
-        if ($request->remove_meal_menu) {
-            $catering->clearMediaCollection('meal_menu');
-        }
+            if ($request->remove_logo) {
+                $catering->clearMediaCollection('logo');
+            }
 
-        if ($request->hasFile('logo')) {
-            $catering->addMediaFromRequest('logo')->toMediaCollection('logo');
-        }
+            if ($request->remove_meal_menu) {
+                $catering->clearMediaCollection('meal_menu');
+            }
 
-        if ($request->hasFile('meal_menu')) {
-            $catering->addMediaFromRequest('meal_menu')->toMediaCollection('meal_menu');
-        }
+            if ($request->hasFile('logo')) {
+                $catering->addMediaFromRequest('logo')->toMediaCollection('logo');
+            }
+
+            if ($request->hasFile('meal_menu')) {
+                $catering->addMediaFromRequest('meal_menu')->toMediaCollection('meal_menu');
+            }
+        });
 
         return back()->with('success', 'Catering updated.');
     }
