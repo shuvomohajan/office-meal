@@ -4,9 +4,11 @@ use App\Http\Controllers\CateringController;
 use App\Http\Controllers\CateringPaymentController;
 use App\Http\Controllers\ManagerHistoryController;
 use App\Http\Controllers\MealController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPaymentController;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,8 +37,12 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('caterings', CateringController::class)->except(['create', 'edit', 'show']);
     Route::resource('catering-payments', CateringPaymentController::class)->except(['create', 'edit', 'show']);
-    Route::resource('meals', MealController::class)->except(['create', 'edit', 'show']);
     Route::resource('users', UserController::class)->except(['create', 'edit', 'show']);
     Route::resource('user-payments', UserPaymentController::class)->except(['create', 'edit', 'show']);
     Route::resource('manager-histories', ManagerHistoryController::class)->except(['create', 'edit', 'show']);
+    Route::resource('orders', OrderController::class)->except(['create']);
+});
+
+Route::get('/test', function () {
+    return User::with('meals')->get();
 });
